@@ -1,0 +1,26 @@
+* {
+  transform-origin: 0px 0px 0px;
+  box-sizing: border-box;
+}
+
+svg {
+  display: flex;
+  flex: 1;
+  /*height: 100%;*/
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.graphEditor {
+  display: flex;
+  flex: 1;
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <g>
+    {{#each model as |node|}}
+      {{component node.nodeType model=node onDrop=(action "onDrop" node)}}
+    {{/each}}
+  </g>
+</svg>
