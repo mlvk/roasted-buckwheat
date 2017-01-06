@@ -1,0 +1,13 @@
+.outerContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.stretch {
+  flex: 1;
+}

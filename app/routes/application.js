@@ -31,5 +31,15 @@ export default Ember.Route.extend({
     //     }
     //   ]
     // }
+  },
+
+  actions: {
+    onNodeDrag(node, position) {
+      node.setProperties(position);
+    },
+
+    onNodeDrop(node) {
+      node.save();
+    }
   }
 });

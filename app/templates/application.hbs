@@ -1,4 +1,4 @@
-<div class="content">
+<div class="outerContainer">
   <button type="button" name="button" {{action "createNode"}}>Add</button>
-  {{editors/graph-editor model=model}}
+  {{editors/graph-editor model=model onNodeDrag=(route-action "onNodeDrag") onNodeDrop=(route-action "onNodeDrop")}}
 </div>

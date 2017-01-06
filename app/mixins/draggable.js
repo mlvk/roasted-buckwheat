@@ -2,34 +2,29 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   didInsertElement() {
-    this.setupStreams();
-  },
-
-  willDestroyElement() {
-    if(this.subscription !== undefined) {
-      this.subscription.dispose();
-    }
-  },
-
-  setupStreams() {
     const mouseDowns = Rx.Observable.fromEvent(this, "mouseDown"),
           mouseMoves = Rx.Observable.fromEvent(window, "mousemove"),
-          mouseUps   = Rx.Observable.fromEvent(window, "mouseup"),
-          elmOffset  = this.$().offset();
+          mouseUps   = Rx.Observable.fromEvent(window, "mouseup");
 
     this.subscription = mouseDowns.subscribe(mouseDownEvent => {
-      const offsetX = mouseDownEvent.clientX - elmOffset.left,
-            offsetY = mouseDownEvent.clientY - elmOffset.top,
-            model   = this.get("model");
+      const elmOffset  = this.$().offset(),
+            offsetX = mouseDownEvent.clientX - elmOffset.left,
+            offsetY = mouseDownEvent.clientY - elmOffset.top;
 
       mouseMoves
         .takeUntil(mouseUps)
         .distinctUntilChanged()
         .map(e => ({x:e.offsetX - offsetX, y:e.offsetY - offsetY}))
         .subscribe(
-          position => model.setProperties(position),
+          position => this.attrs.onDrag(position),
           () => {},
           () => this.attrs.onDrop());
     });
+  },
+
+  willDestroyElement() {
+    if(this.subscription !== undefined) {
+      this.subscription.dispose();
+    }
   }
 });

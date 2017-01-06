@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg">
+<svg class="row stretch" xmlns="http://www.w3.org/2000/svg">
   <g>
     {{#each model as |node|}}
-      {{component node.nodeType model=node onDrop=(action "onDrop" node)}}
+      {{component node.nodeType
+          model=node
+          onDrag=(action onNodeDrag node)
+          onDrop=(action onNodeDrop node)}}
     {{/each}}
   </g>
 </svg>
