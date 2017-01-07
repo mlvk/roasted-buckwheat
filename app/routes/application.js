@@ -1,8 +1,16 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model() {
-    return this.store.findAll("node");
+  // setupController(controller, model) {
+  //   controller.set("nodes", this.store.peekAll("node"));
+  //   controller.set("edges", this.store.peekAll("edge"));
+  //   this._super(controller, model);
+  // },
+
+  async model() {
+    const hey = await this.store.findRecord("node", "node1");
+    await hey.materializeDown();
+    return hey;
     // return {
     //   nodes: [
     //     {
