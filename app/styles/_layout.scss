@@ -8,6 +8,11 @@
   display: flex;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
 .stretch {
   flex: 1;
 }

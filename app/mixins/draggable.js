@@ -11,6 +11,11 @@ export default Ember.Mixin.create({
             offsetX = mouseDownEvent.clientX - elmOffset.left,
             offsetY = mouseDownEvent.clientY - elmOffset.top;
 
+      mouseUps
+        .takeUntil(mouseMoves)
+        .takeUntil(mouseDowns)
+        .subscribe(() => this.attrs.onClick())
+      
       mouseMoves
         .takeUntil(mouseUps)
         .distinctUntilChanged()

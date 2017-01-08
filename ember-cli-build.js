@@ -24,6 +24,7 @@ module.exports = function(defaults) {
   // along with the exports of each module as its value.
 
   app.import("bower_components/rxjs/dist/rx.all.compat.min.js");
+  app.import("bower_components/ramda/dist/ramda.min.js");
 
   return app.toTree();
 };

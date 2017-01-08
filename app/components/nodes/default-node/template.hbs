@@ -1,7 +1,9 @@
 <g transform="translate({{model.x}} {{model.y}})">
-  <rect class="outerBorder"></rect>
-  <rect class="nodeLink" {{action "doIt"}}></rect>
-  <text x=50 y=25 font-family="Verdana" font-size="12">
-    {{model.label}}
-  </text>
+  <g transform="translate(-50 -25)">
+    <rect class="outerBorder"></rect>
+    <rect class="nodeLink" {{action "doIt"}}></rect>
+    <text x=50 y=25 font-family="Verdana" font-size="12">
+      {{model.label}}
+    </text>
+  </g>
 </g>
