@@ -12,10 +12,6 @@ export default DS.Model.extend({
   a:     DS.belongsTo('node', {inverse: 'children'}),
   b:     DS.belongsTo('node', {inverse: 'parents'}),
 
-  // parentNormalized: computed("a.totalInput", function() {
-  //   return this.get("q") / this.get("a.totalInput");
-  // }),
-
   edgeType: Ember.computed("type", function() {
     const type = this.get("type") || "default";
     return `edges/${type}-edge`;
@@ -23,14 +19,14 @@ export default DS.Model.extend({
 
   normalizedChildren: computed("b.normalizedChildren", function() {
     const q = this.get("q");
-    const factor = obj => {
-      return {
-        node: obj.node,
-        factor: obj.factor * q
-      }
-    };
+    const mul = obj => ({
+      node: obj.node,
+      factor: obj.factor * q
+    });
 
-    return R.map(factor, this.get("b.normalizedChildren"));
+    console.log("Edge", this.get("id"), R.map(mul, this.get("b.normalizedChildren")));
+
+    return R.map(mul, this.get("b.normalizedChildren"));
   }),
 
   async materializeDown() {

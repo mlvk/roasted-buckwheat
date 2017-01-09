@@ -1,19 +1,25 @@
-{{one-way-input model.label
+<div class="row">
+  <span>Label:</span>
+ {{one-way-input model.label
     update=(action (mut model.label))
     onblur=(action "saveNode")}}
+</div>
 
-{{one-way-input model.yield
+<div class="row">
+  <span>Yield:</span>
+ {{one-way-input model.yield
     update=(action (mut model.yield))
     onblur=(action "saveNode")}}
+</div>
 
 {{#each model.children as |edge|}}
-  {{edge.b.label}}: {{one-way-input edge.q
+  <div class="row">
+    <span>{{edge.b.label}}</span>
+    {{one-way-input edge.q
       update=(action (mut edge.q))
       onblur=(action "saveEdge" edge)}}
+  </div>
 {{/each}}
-
-Factor: {{model.factor}}
-Shrink: {{model.shrink}}
 
 <div class="col">
   {{#each-in model.normalizedChildren as |key nodeData|}}

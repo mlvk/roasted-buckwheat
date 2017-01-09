@@ -9,11 +9,5 @@ const {
 } = Ember;
 
 export default Ember.Component.extend(Draggable, {
-  tagName: "g",
-
-  actions: {
-    doIt() {
-      console.log("clicked");
-    }
-  }
+  tagName: "g"
 });

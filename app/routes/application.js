@@ -8,6 +8,11 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    createNode(node) {
+      const newNode = this.store.createRecord("node");
+      this.store.createRecord("edge", {a:node, b:newNode});
+    },
+
     onNodeDrag(node, position) {
       node.setProperties(position);
     },

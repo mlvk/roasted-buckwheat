@@ -44,39 +44,31 @@ export default DS.Model.extend({
     const selfData = {
       [this.get("id")]: {
         node: this,
-        factor: this.get("normalizedYield")
+        factor: 1
       }
     };
 
     const normalizedYield = this.get("normalizedYield");
-    const factor = obj => {
-      return {
+    const mul = obj => ({
         node: obj.node,
         factor: obj.factor * normalizedYield
-      }
-    };
+    });
 
-    const sum = (a, b) => {
-      return {
-        node: a.node,
-        factor: a.factor + b.factor
-      }
-    }
+    const sum = (a, b) => ({
+      node: a.node,
+      factor: a.factor + b.factor
+    });
 
     const childDatoms = this.get("children")
       .map(edge => edge.get("normalizedChildren"))
       .reduce((acc, cur) => R.mergeWith(sum, acc, cur), {});
 
-    const factored = R.map(factor, childDatoms);
+    const factored = R.map(mul, childDatoms);
 
-    return R.mergeWith(() => {
-      debugger;
-    }, selfData, factored);
+    console.log("Node", this.get("id"), R.mergeWith(() => {}, selfData, factored));
+
+    return R.mergeWith(() => {}, selfData, factored);
   }),
-
-  // shrink: computed("yield", "totalInput", function() {
-  //   return this.get("totalInput") / Number(this.get("yield"));
-  // }),
 
   nodeType: computed("type", function() {
     const type = this.get("type") || "default";
@@ -88,11 +80,6 @@ export default DS.Model.extend({
     return `editors/${type}-node-editor`;
   }),
 
-  async materializeDown() {
-    const edges = await this.get("children");
-    await Promise.all(edges.map(edge => edge.materializeDown()));
-  },
-
   childNodes: computed("children.@each.{childNodes}", function() {
     const edges = this.get("children");
     const nodes = edges.map(edge => edge.get("childNodes"));
@@ -100,8 +87,13 @@ export default DS.Model.extend({
   }),
 
   childEdges: computed("children.@each.{childEdges}", function() {
-    const children = this.get("children.content").toArray();
-    const edges = children.map(edge => edge.get("childEdges"));
-    return _.flattenDeep([children, edges]);
-  })
+    const edges = this.get("children").toArray();
+    const downstreamEdges = edges.map(edge => edge.get("childEdges"));
+    return _.flattenDeep([edges, downstreamEdges]);
+  }),
+
+  async materializeDown() {
+    const edges = await this.get("children");
+    await Promise.all(edges.map(edge => edge.materializeDown()));
+  }
 });
