@@ -1,0 +1,21 @@
+Node ID: {{model.id}}
+{{#each products as |product|}}
+  {{product.label}}
+{{/each}}
+
+{{#each model.children as |edge|}}
+  <div class="row">
+    <span>{{edge.b.label}}</span>
+    {{one-way-input edge.q
+      update=(action (mut edge.q))
+      onblur=(route-action "saveEdge" edge)}}
+  </div>
+{{/each}}
+
+<div class="col">
+  {{#each-in model.normalizedChildren as |key nodeData|}}
+    <div class="row">
+      {{nodeData.node.label}} - {{nodeData.factor}}
+    </div>
+  {{/each-in}}
+</div>

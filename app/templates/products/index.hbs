@@ -1,0 +1,5 @@
+<div class="col">
+  {{#each model as |product|}}
+    {{link-to product.label "products.show" product.id}}
+  {{/each}}
+</div>

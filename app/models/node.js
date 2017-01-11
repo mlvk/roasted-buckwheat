@@ -19,6 +19,7 @@ export default DS.Model.extend({
   uom:      DS.attr('string'),
   yield:    DS.attr('number'),
   type:     DS.attr('string', {defaultValue:"default"}),
+  tag:      DS.attr('string', {defaultValue:"ingredient"}),
 
   children: DS.hasMany('edge'),
   parents:  DS.hasMany('edge'),
@@ -40,7 +41,7 @@ export default DS.Model.extend({
     return this.get("hasChildren") ? 1 / this.get("yield") : 1;
   }),
 
-  normalizedChildren: computed("children.@each.{normalizedChildren}", function() {
+  normalizedChildren: computed("children.@each.{normalizedChildren,q}", "normalizedYield", function() {
     const selfData = {
       [this.get("id")]: {
         node: this,

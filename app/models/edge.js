@@ -17,7 +17,7 @@ export default DS.Model.extend({
     return `edges/${type}-edge`;
   }),
 
-  normalizedChildren: computed("b.normalizedChildren", function() {
+  normalizedChildren: computed("b.normalizedChildren", "b.normalizedChildren.normalizedYield", "q", function() {
     const q = this.get("q");
     const mul = obj => ({
       node: obj.node,

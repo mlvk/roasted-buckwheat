@@ -1,0 +1,16 @@
+<div class="outerContainer">
+  <button type="button" name="button" {{action "createNode"}}>Add</button>
+  <div class="row stretch">
+    {{editors/graph-editor
+        model=model
+        focusNode=(action "focusNode")
+        createNode=(route-action "createNode")
+        onNodeDrag=(route-action "onNodeDrag")
+        onNodeDrop=(route-action "onNodeDrop")}}
+
+    {{#if hasSelectedNode}}
+      {{component currentNode.nodeEditorType
+          model=currentNode}}
+    {{/if}}
+  </div>
+</div>
