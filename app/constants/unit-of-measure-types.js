@@ -3,4 +3,4 @@ export default {
   WEIGHT: "weight",
   VOLUME: "volume",
   UNIT: "unit"
-}
+};

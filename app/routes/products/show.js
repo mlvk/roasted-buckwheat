@@ -1,10 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  async model() {
-    const record = await this.store.findRecord("node", "node1");
-    await record.materializeDown();
-    return record;
+  model(params) {
+    return this.store.findRecord("node", params.product_id);
   },
 
   actions: {

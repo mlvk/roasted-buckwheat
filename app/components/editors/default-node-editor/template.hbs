@@ -12,6 +12,13 @@
     onblur=(action "saveNode")}}
 </div>
 
+<div class="row">
+  <span>Tag:</span>
+ {{one-way-input model.tag
+    update=(action (mut model.tag))
+    onblur=(action "saveNode")}}
+</div>
+
 {{#each model.children as |edge|}}
   <div class="row">
     <span>{{edge.b.label}}</span>

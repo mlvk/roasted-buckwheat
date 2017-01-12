@@ -6,5 +6,17 @@ export default Ember.Route.extend({
       orderBy: "tag",
       equalTo: "product"
     });
+  },
+
+  actions: {
+    createProduct() {
+      const node = this.store.createRecord("node", {
+        tag:"product",
+        yield: 1
+      });
+
+      node.save();
+    }
   }
+
 });

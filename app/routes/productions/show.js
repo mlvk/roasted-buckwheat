@@ -13,8 +13,6 @@ export default Ember.Route.extend({
       equalTo: "product"
     });
 
-    await production.materializeDown();
-
     return [production, products];
   },
 

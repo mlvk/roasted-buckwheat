@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
+const {
+  Promise
+} = Ember.RSVP;
+
 export default Ember.Route.extend({
   setupController(controller, results) {
     controller.set("model", results[0]);
@@ -16,7 +20,9 @@ export default Ember.Route.extend({
       this.store.query('node', {
         orderBy: "tag",
         equalTo: "product"
-      })
+      }),
+      this.store.findAll("node"),
+      this.store.findAll("edge")
     ]);
   },
 
@@ -27,10 +33,24 @@ export default Ember.Route.extend({
         yield: 1
       });
 
-      const edges = products.map(product => this.store.createRecord("edge", {a:node, b:product, q:0}));
+      products.forEach(product => {
+        const edge = this.store.createRecord("edge", {a:node, b:product, q:0});
+        edge.save();
+        product.save();
+      });
 
       node.save();
-      edges.forEach(edge => edge.save());
+    },
+
+    async destroyProduction(production) {
+      const edges = await production.get("children");
+      edges.forEach(async edge => {
+        const b = await edge.get("b");
+        edge.destroyRecord();
+        b.save();
+      });
+
+      production.destroyRecord();
     }
   }
 });

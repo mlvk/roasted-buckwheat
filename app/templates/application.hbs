@@ -1,8 +1,18 @@
+<!-- <button {{action 'toggleHello'}}>
+  Give it a shot!
+</button>
+
+{{#if showHello}}
+  {{#liquid-tether target=".mainContent" attachment="middle center"}}
+    "Hello World"
+  {{/liquid-tether}}
+{{/if}} -->
+
 <div class="col stretch">
   {{link-to "Products" "products.index"}}
   {{link-to "Productions" "productions.index"}}
 
-  <div class="col stretch">
+  <div class="col stretch mainContent">
     {{outlet}}
   </div>
 </div>

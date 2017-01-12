@@ -1,14 +1,13 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import _ from 'lodash';
-import UnitOfMeasureTypes from 'roasted-buckwheat/constants/unit-of-measure-types';
+// import UnitOfMeasureTypes from 'roasted-buckwheat/constants/unit-of-measure-types';
 
 const {
   computed
 } = Ember;
 
 const {
-  equal,
   notEmpty
 } = computed;
 
@@ -25,17 +24,6 @@ export default DS.Model.extend({
   parents:  DS.hasMany('edge'),
 
   hasChildren: notEmpty("children"),
-
-  // isWeightType: equal("uom", UnitOfMeasureTypes.WEIGHT),
-  // isTimeType: equal("uom", UnitOfMeasureTypes.TIME),
-  // isVolumeType: equal("uom", UnitOfMeasureTypes.VOLUME),
-  // isEachType: equal("uom", UnitOfMeasureTypes.EACH),
-
-  // totalInput: computed("children.@each.{q}", function() {
-  //   return this.get("children")
-  //     .filter(edge => Ember.isPresent(edge))
-  //     .reduce((acc, cur) => acc + Number(cur.get("q")), 0);
-  // }),
 
   normalizedYield: computed("yield", "hasChildren", function() {
     return this.get("hasChildren") ? 1 / this.get("yield") : 1;
@@ -66,8 +54,6 @@ export default DS.Model.extend({
 
     const factored = R.map(mul, childDatoms);
 
-    console.log("Node", this.get("id"), R.mergeWith(() => {}, selfData, factored));
-
     return R.mergeWith(() => {}, selfData, factored);
   }),
 
@@ -91,10 +77,5 @@ export default DS.Model.extend({
     const edges = this.get("children").toArray();
     const downstreamEdges = edges.map(edge => edge.get("childEdges"));
     return _.flattenDeep([edges, downstreamEdges]);
-  }),
-
-  async materializeDown() {
-    const edges = await this.get("children");
-    await Promise.all(edges.map(edge => edge.materializeDown()));
-  }
+  })
 });

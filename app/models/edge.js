@@ -17,22 +17,17 @@ export default DS.Model.extend({
     return `edges/${type}-edge`;
   }),
 
-  normalizedChildren: computed("b.normalizedChildren", "b.normalizedChildren.normalizedYield", "q", function() {
+  normalizedChildren: computed("b.normalizedChildren", "q", function() {
     const q = this.get("q");
     const mul = obj => ({
       node: obj.node,
       factor: obj.factor * q
     });
 
-    console.log("Edge", this.get("id"), R.map(mul, this.get("b.normalizedChildren")));
+    const childDatoms = this.get("b.normalizedChildren") || {};
 
-    return R.map(mul, this.get("b.normalizedChildren"));
+    return R.map(mul, childDatoms);
   }),
-
-  async materializeDown() {
-    const node = await this.get("b");
-    await node.materializeDown();
-  },
 
   childNodes: Ember.computed.alias("b.childNodes"),
   childEdges: Ember.computed.alias("b.childEdges")

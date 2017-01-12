@@ -1,3 +1,5 @@
+<button type="button" name="button" {{action (route-action "createProduct")}}>Create Product</button>
+
 <div class="col">
   {{#each model as |product|}}
     {{link-to product.label "products.show" product.id}}
