@@ -1,3 +1,27 @@
 @import "base";
 @import "layout";
 @import "pod-styles";
+@import 'ember-power-select';
+
+.modal-backdrop {
+    z-index: 0;
+    background-color: rgba(36,51,66,.66);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+}
+
+.modal-content {
+    width: 624px;
+    background-color: #fff;
+    border: 2px solid #ebedef;
+    border-radius: 7px;
+    background-clip: border-box;
+    box-shadow: -14px 14px 0 0 rgba(0,0,0,.35);
+    overflow: hidden;
+    padding-bottom: 80px;
+}

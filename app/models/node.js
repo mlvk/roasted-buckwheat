@@ -18,7 +18,6 @@ export default DS.Model.extend({
   uom:      DS.attr('string'),
   yield:    DS.attr('number'),
   type:     DS.attr('string', {defaultValue:"default"}),
-  tag:      DS.attr('string', {defaultValue:"ingredient"}),
 
   children: DS.hasMany('edge'),
   parents:  DS.hasMany('edge'),

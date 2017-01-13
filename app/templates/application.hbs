@@ -1,13 +1,3 @@
-<!-- <button {{action 'toggleHello'}}>
-  Give it a shot!
-</button>
-
-{{#if showHello}}
-  {{#liquid-tether target=".mainContent" attachment="middle center"}}
-    "Hello World"
-  {{/liquid-tether}}
-{{/if}} -->
-
 <div class="col stretch">
   {{link-to "Products" "products.index"}}
   {{link-to "Productions" "productions.index"}}
@@ -16,3 +6,5 @@
     {{outlet}}
   </div>
 </div>
+
+{{liquid-destination}}

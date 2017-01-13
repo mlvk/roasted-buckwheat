@@ -1,0 +1,22 @@
+& {
+  cursor: pointer;
+}
+
+.outerBorder {
+  width: 100px;
+  height: 50px;
+  rx: 10;
+  ry: 10;
+  stroke: green;
+  stroke-width: 2px;
+  fill: white;
+}
+
+.nodeLink {
+  x: 45;
+  y: 45;
+  width: 10px;
+  height: 10px;
+  fill: brown;
+  cursor: crosshair;
+}

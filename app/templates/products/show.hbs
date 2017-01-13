@@ -4,7 +4,7 @@
     {{editors/graph-editor
         model=model
         focusNode=(action "focusNode")
-        createNode=(route-action "createNode")
+        createNode=(action "showAddNode")
         onNodeDrag=(route-action "onNodeDrag")
         onNodeDrop=(route-action "onNodeDrop")}}
 
@@ -14,3 +14,100 @@
     {{/if}}
   </div>
 </div>
+
+{{#if (eq currentModalStep 1)}}
+  {{liquid-wormhole stack="modal-backdrop" class="modal-backdrop"}}
+  {{#liquid-tether
+      stack="modal-dialog"
+      value=1
+      target="document.body"
+      targetModifier="visible"
+      attachment="middle center"
+      class="modal-content"}}
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <span>Add a new relationship of type:</span>
+          <button class="btn btn-default btn-embossed" {{action "selectNodeType" "ingredient"}}>Ingredient</button>
+          <button class="btn btn-default btn-embossed" {{action "selectNodeType" "recipe"}}>Recipe</button>
+          <button class="btn btn-default btn-embossed" {{action "selectNodeType" "resource"}}>Resource</button>
+          <button class="btn btn-default btn-embossed" {{action "selectNodeType" "process"}}>Process</button>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default btn-embossed" {{action "cancelAddNode"}}>Cancel</button>
+        </div>
+      </div>
+  {{/liquid-tether}}
+{{/if}}
+
+{{#if (eq currentModalStep 2)}}
+  {{liquid-wormhole stack="modal-backdrop" class="modal-backdrop"}}
+  {{#liquid-tether
+      stack="modal-dialog"
+      value=2
+      target="document.body"
+      targetModifier="visible"
+      attachment="middle center"
+      class="modal-content"}}
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          {{desiredNodeType}}
+          {{log ingredients}}
+          {{#if (eq desiredNodeType "ingredient")}}
+            {{#power-select
+              selected=desiredNodeA
+              options=ingredients
+              onchange=(action "selectNodeForA")
+              as |ingredient|
+            }}
+              {{ingredient.label}}
+            {{/power-select}}
+
+            <div class="row">
+             {{one-way-input newIngredientLabel
+                update=(action (mut newIngredientLabel))}}
+            </div>
+          {{/if}}
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default btn-embossed" {{action "cancelAddNode"}}>Cancel</button>
+          <button class="btn btn-primary btn-embossed" {{action "showPreviousModalStep"}}>Previous</button>
+          <button class="btn btn-primary btn-embossed" {{action "selectOrCreate" desiredNodeA newIngredientLabel}}>Next</button>
+        </div>
+      </div>
+  {{/liquid-tether}}
+{{/if}}
+
+{{#if (eq currentModalStep 3)}}
+  {{liquid-wormhole stack="modal-backdrop" class="modal-backdrop"}}
+  {{#liquid-tether
+      stack="modal-dialog"
+      value=3
+      target="document.body"
+      targetModifier="visible"
+      attachment="middle center"
+      class="modal-content"}}
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          Step 3
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default btn-embossed" {{action "cancelAddNode"}}>Cancel</button>
+          <button class="btn btn-primary btn-embossed" {{action "showPreviousModalStep"}}>Previous</button>
+          <button class="btn btn-primary btn-embossed" {{action "createNewNode"}}>Complete</button>
+        </div>
+      </div>
+  {{/liquid-tether}}
+{{/if}}

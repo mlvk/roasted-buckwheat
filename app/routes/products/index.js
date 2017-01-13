@@ -1,11 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model() {
-    return this.store.query('node', {
-      orderBy: "tag",
-      equalTo: "product"
-    });
+  setupController(controller, model) {
+    controller.set("model", this.store.peekAll("node"));
   },
 
   actions: {
